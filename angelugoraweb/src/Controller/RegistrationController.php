@@ -30,6 +30,10 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            // Después de persistir el usuario
+            $user->setRoles(['ROLE_USER']); // Asignamos un rol por defecto
+
+            // Antes de la redirección o autenticación
             $entityManager->persist($user);
             $entityManager->flush();
 

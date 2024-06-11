@@ -43,7 +43,7 @@
                         {% if app.user %}
                             <a class="nav-link" href="{{ path('ruta_de_la_vista_del_usuario') }}"><i class="fas fa-user"></i></a>
                         {% else %}
-                            <a class="nav-link" href="#"><i class="fas fa-user"></i></a>
+                            <a class="nav-link" href="{{ path('app_login') }}"><i class="fas fa-user"></i></a>
                         {% endif %}
                     </li>
                 </ul>
