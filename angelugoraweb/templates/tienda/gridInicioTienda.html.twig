@@ -1,0 +1,30 @@
+{# gridInicioTienda.html.twig #}
+<div class="grid-container">
+    <div class="novedades">
+        <h2>Novedades</h2>
+        {% include 'tienda/gridNovedadesInicio.html.twig' with {
+            'novedades': novedades
+            }
+        %}
+
+        <a href="{{ path('ver_todas_novedades') }}">Ver todas las novedades</a>
+    </div>
+
+    <div class="todos-productos">
+        <h2>Todos los productos</h2>
+        {% include 'tienda/gridProductosInicio.html.twig'  with {
+            'productos': productos
+            }
+        %}
+        <a href="{{ path('ver_todos_los_productos') }}">Ver todos los productos</a>
+    </div>
+
+    <div class="categorias">
+        <h2>Categorías</h2>
+        {% include 'tienda/gridCategoriasInicio.html.twig'  with {
+            'categorias': categorias
+            }
+        %}
+        <a href="{{ path('ver_todas_las_categorias') }}">Ver todas las categorías</a>
+    </div>
+</div>

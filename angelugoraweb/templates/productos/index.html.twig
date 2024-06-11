@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Productos{% endblock %}
+
+{% block main %}
+    <h1>Productos</h1>
+
+    <div class="card-container">
+        {% for producto in productos %}
+            <div class="card">
+                <h3>{{ producto.Nombre }}</h3>
+                <p>Precio: {{ producto.Precio }}</p>
+                <a href="{{ path('producto_show', { 'id': producto.id }) }}">Ver detalles</a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

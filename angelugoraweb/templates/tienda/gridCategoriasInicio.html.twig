@@ -1,0 +1,13 @@
+{# gridCategoriasInicio.html.twig #}
+<div class="card-container">
+    {% if categorias is not empty %}
+        {% for categoria in categorias|slice(0, 3) %}
+            <div class="card">
+                <h3>{{ categoria.nombre }}</h3>
+                <p>{{ categoria.descripcion }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay categorías disponibles en este momento.</p>
+    {% endif %}
+</div>

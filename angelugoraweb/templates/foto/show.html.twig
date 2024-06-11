@@ -1,0 +1,11 @@
+{% extends 'tienda/index.html.twig' %}
+
+{% block title %}Detalles de la Foto{% endblock %}
+
+{% block main %}
+    <h1>Detalles de la Foto</h1>
+
+    <img src="{{ asset(foto.nombre) }}" alt="Foto de {{ foto.Producto.Nombre }}">
+    <p>Producto: {{ foto.Producto.Nombre }}</p>
+    <a href="{{ path('fotos_index') }}">Volver a la lista</a>
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+	<div class="servicio-container">
+		<div class="servicio">
+			<div class="servicio-texto">
+				<h2>FIESTÓN CLÁSICO</h2>
+				<h5>¡Prepárate para una noche de música y diversión sin igual con Angelu Gora!</h5>
+				<p id="textosServicios">
+                    Soy Angelu Gora, el DJ que hará que tu fiesta sea inolvidable. Con una selección musical diversa y una energía contagiosa, transformaré cada evento en una celebración llena de emoción y buen rollo.
+                    <br>
+                    Contáctame ahora para llevar tu fiesta al siguiente nivel con mi pasión y creatividad.
+				</p>
+                <a href="{{ path('app_contacto') }}" class="boton-contacto">¡Contacta!</a>
+			</div>
+			<div class="servicio-imagen">
+				<img src="{{ asset('imagenes/fotos/serviciosFieston.png') }}" alt="Fiestón Clásico">
+			</div>
+		</div>
+
+		<div class="servicio">
+			<div class="servicio-imagen">
+				<img src="{{ asset('imagenes/fotos/serviciosAyto.png') }}" alt="Ayuntamientos">
+			</div>
+			<div class="servicio-texto">
+				<h2 id="textoDerecha">AYUNTAMIENTOS</h2>
+				<h5>¡Prepárate para una noche llena de diversión y alegría en tu próxima verbena con Angelu Gora!</h5>
+				<p id="textosServicios">
+                    Soy Angelu Gora, un DJ entusiasta con un toque fresco para hacer que cada fiesta sea especial. Con una mezcla ecléctica y la habilidad de conectar con la audiencia, convertiré tu verbena en una auténtica celebración del pueblo.
+                    <br>
+                    Contáctame hoy y descubre cómo puedo hacer que tu evento sea memorable.
+				</p>
+                <a href="{{ path('app_contacto') }}" class="boton-contacto">¡Contacta!</a>
+			</div>
+		</div>
+
+		<div class="servicio">
+			<div class="servicio-texto">
+				<h2>BODAS</h2>
+				<h5>¡Prepárense para una noche de amor, alegría y buena música en su día especial con Angelu Gora!</h5>
+				<p id="textosServicios">
+                    Soy Angelu Gora, un DJ apasionado con un toque mágico para hacer que tu día sea perfecto. Con una selección musical cuidadosamente curada y la capacidad de crear momentos inolvidables, convertiré tu boda en una experiencia única y emocionante.
+                    <br>
+                    Contáctame ahora y descubre cómo puedo hacer que tu boda sea inolvidable.
+				</p>
+                <a href="{{ path('app_contacto') }}" class="boton-contacto">¡Contacta!</a>
+			</div>
+			<div class="servicio-imagen">
+				<img src="{{ asset('imagenes/fotos/serviciosBoda.jpg') }}" alt="Bodas">
+			</div>
+		</div>
+
+		<div class="servicio">
+			<div class="servicio-imagen">
+				<img src="{{ asset('imagenes/fotos/serviciosPrivado.png') }}" alt="Eventos Privados">
+			</div>
+			<div class="servicio-texto">
+				<h2 id="textoDerecha">EVENTOS PRIVADOS</h2>
+				<h5>¡Prepárense para una noche de diversión sin límites en su próximo evento privado con Angelu Gora!</h5>
+				<p id="textosServicios">
+                    Soy Angelu Gora, un DJ dinámico con una pasión desbordante por la música. Con una mezcla diversa y una energía contagiosa, convertiré tu reunión en una fiesta que dejará huella en todos los asistentes.
+                    <br>
+                    Contáctame hoy y descubre cómo puedo hacer que tu evento sea inolvidable.
+				</p>
+                <a href="{{ path('app_contacto') }}" class="boton-contacto">¡Contacta!</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

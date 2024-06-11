@@ -1,0 +1,21 @@
+{% extends 'tienda/index.html.twig' %}
+
+{% block title %}Pedidos{% endblock %}
+
+{% block main %}
+    <h1>Pedidos</h1>
+
+    {% if pedidos is empty %}
+        <p>No hay pedidos disponibles.</p>
+    {% else %}
+        <div class="card-container">
+            {% for pedido in pedidos %}
+                <div class="card">
+                    <h3>Pedido #{{ pedido.id }}</h3>
+                    <p>Fecha: {{ pedido.fecha|date('Y-m-d') }}</p>
+                    <a href="{{ path('pedido_show', { 'id': pedido.id }) }}">Ver detalles</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

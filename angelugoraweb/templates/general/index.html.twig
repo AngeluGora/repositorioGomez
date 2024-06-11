@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+
+	<div id="carouselInicio" class="carousel slide" data-bs-ride="carousel">
+		<div class="carousel-indicators">
+			<button type="button" data-bs-target="#carouselInicio" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+			<button type="button" data-bs-target="#carouselInicio" data-bs-slide-to="1" aria-label="Slide 2"></button>
+			<button type="button" data-bs-target="#carouselInicio" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		</div>
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="{{ asset('imagenes/fotos/FondoPantallaLogo.png') }}" class="d-block w-60" alt="Imagen 1">
+			</div>
+			<div class="carousel-item">
+				<img src="{{ asset('imagenes/fotos/disfruteSinLimites.jpg') }}" class="d-block w-60" alt="Imagen 2">
+			</div>
+			<div class="carousel-item">
+				<img src="{{ asset('imagenes/fotos/todoTipoDeEventos.jpg') }}" class="d-block w-100" alt="Imagen 3">
+			</div>
+		</div>
+		<button class="carousel-control-prev" type="button" data-bs-target="#carouselInicio" data-bs-slide="prev">
+			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Anterior</span>
+		</button>
+		<button class="carousel-control-next" type="button" data-bs-target="#carouselInicio" data-bs-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="visually-hidden">Siguiente</span>
+		</button>
+	</div>
+
+	<div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>Angelu Gora</h2>
+                <div class="card custom-card mb-4">
+                    <div class="card-body custom-card-body d-flex align-items-center justify-content-center flex-column">
+                        <p id="textosGenerales">Eyy, ¿qué pasa, amigos? Aquí Angelu Gora. Espero que estéis muy bien y tengáis muchas ganas de fiesta porque el cachondeo, fiestón y locura están asegurados si en cabina pincha Angelu Gora. ¿Quieres saber más sobre mí y sobre mis fiestas? Pues sigue navegando por la web y podrás encontrar desde los servicios que ofrezco, pasando por algunas de mis mejores fotos y videos, hasta un apartado en el que podrás comprar mi merchandising.
+                            <br>
+                            ¡Muchas gracias! Y recuerda, las buenas fiestas son las que te acuerdas toda la vida ;)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="container mt-5">
+		<div class="row">
+			<h2 class="text-center">Servicios</h2>
+			<div class="col-lg-3 col-md-6 mb-4">
+				<a href="{{ path('app_servicios') }}" class="enlacesCards">
+					<div class="card h-100">
+						<img src="{{ asset('imagenes/fotos/cardDiscoteca.webp') }}" class="card-img-top" alt="Servicio 1">
+						<div class="card-body">
+							<h5 class="card-title" id="titulosSecundarios">Fiestón Clásico</h5>
+							<p class="card-text" id="textosGenerales">En discotecas, clubs y todo tipo de salas</p>
+						</div>
+				</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-md-6 mb-4">
+				<a href="{{ path('app_servicios') }}" class="enlacesCards">
+					<div class="card h-100">
+						<img src="{{ asset('imagenes/fotos/cardFiestaPueblo.webp') }}" class="card-img-top" alt="Servicio 2">
+						<div class="card-body">
+							<h5 class="card-title" id="titulosSecundarios">Ayuntamientos</h5>
+							<p class="card-text" id="textosGenerales">Para la verbena, bermut o feria</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-md-6 mb-4">
+				<a href="{{ path('app_servicios') }}" class="enlacesCards">
+					<div class="card h-100">
+						<img src="{{ asset('imagenes/fotos/cardBoda.webp') }}" class="card-img-top" alt="Servicio 2">
+						<div class="card-body">
+							<h5 class="card-title" id="titulosSecundarios">Bodas</h5>
+							<p class="card-text" id="textosGenerales">Haz de tu día especial una fiesta para el recuerdo.</p>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-md-6 mb-4">
+				<a href="{{ path('app_servicios') }}" class="enlacesCards">
+					<div class="card h-100">
+						<img src="{{ asset('imagenes/fotos/cardFiestaPrivada.webp') }}" class="card-img-top" alt="Servicio 3">
+						<div class="card-body">
+							<h5 class="card-title" id="titulosSecundarios">Eventos Privados</h5>
+							<p class="card-text" id="textosGenerales">Fiesta privada? Mejor con Angelu Gora</p>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

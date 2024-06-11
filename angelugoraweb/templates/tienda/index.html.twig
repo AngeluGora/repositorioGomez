@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="contenidoTienda">
+        <div class="contenedorBarraTienda">
+            {% include 'tienda/navbar.html.twig' %}
+        </div>
+
+        <div class="contenedorContenidoTienda">
+            {% include 'tienda/gridInicioTienda.html.twig' with {
+                'productos': productos,
+                'categorias': categorias,
+                'novedades': novedades
+            } %}
+        </div>
+    </div>
+{% endblock %}
+
+

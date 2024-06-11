@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalles de Línea de Pedido{% endblock %}
+
+{% block main %}
+    <h1>Detalles de Línea de Pedido</h1>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>{{ linea_pedido.id }}</td>
+        </tr>
+        <tr>
+            <th>Producto</th>
+            <td>{{ linea_pedido.producto.nombre }}</td>
+        </tr>
+        <tr>
+            <th>Cantidad</th>
+            <td>{{ linea_pedido.cantidad }}</td>
+        </tr>
+        <tr>
+            <th>Precio</th>
+            <td>{{ linea_pedido.precio }}</td>
+        </tr>
+        <tr>
+            <th>Pedido</th>
+            <td>{{ linea_pedido.pedido.id }}</td>
+        </tr>
+    </table>
+
+    <a href="{{ path('lineas_pedido_index') }}">Volver a la lista</a>
+{% endblock %}

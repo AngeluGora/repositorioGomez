@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+<div class="d-flex justify-content-center contactInfo">
+    <section class="contact-info">
+        <h2>Información de Contacto</h2>
+        <ul class="social-media list-unstyled">
+            <div class="row">
+                <div class="col">
+                    <li><a href="https://www.instagram.com/angelu_gora/" target="_blank" id="textosGenerales"><i class="fab fa-instagram"></i>@angelu_gora</a></li>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <li><a href="https://www.tiktok.com/@angelu_gora" target="_blank" id="textosGenerales"><i class="fab fa-tiktok"></i>@angelu_gora</a></li>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <li id="textosGenerales"><i class="fas fa-envelope"></i> djangelugora@gmail.com</li>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <li id="textosGenerales"><i class="fab fa-whatsapp"></i> +34 648 41 53 72</li>
+                </div>
+            </div>
+        </ul>
+    </section>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="container mt-5 mb-5 contactInfo">
+        <section class="social-embed mt-5">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>Instagram</h2>
+                    <div class="embed-container">
+                        <iframe src="//lightwidget.com/widgets/bac068fde538550cb45ebf63af2103d1.html" scrolling="yes" allowtransparency="true" class="lightwidget-widget"></iframe>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h2>TikTok</h2>
+                    <div class="embed-container">
+                        <iframe src="https://www.tiktok.com/embed/@angelu_gora" scrolling="yes" allowtransparency="true" class="tiktok-iframe"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <!-- LightWidget WIDGET -->
+    <script src="https://cdn.lightwidget.com/widgets/lightwidget.js"></script>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'tienda/index.html.twig' %}
+
+{% block title %}Detalles de la Categoría{% endblock %}
+
+{% block main %}
+    <h1>{{ categoria.Nombre }}</h1>
+
+    <p>{{ categoria.Descripcion }}</p>
+    <a href="{{ path('categorias_index') }}">Volver a la lista</a>
+{% endblock %}

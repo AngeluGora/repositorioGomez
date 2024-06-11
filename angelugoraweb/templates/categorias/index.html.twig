@@ -1,0 +1,21 @@
+{% extends 'tienda/index.html.twig' %}
+
+{% block title %}Categorías{% endblock %}
+
+{% block main %}
+    <h1>Categorías</h1>
+
+    {% if categorias is empty %}
+        <p>No hay categorías disponibles.</p>
+    {% else %}
+        <div class="card-container">
+            {% for categoria in categorias %}
+                <div class="card">
+                    <h3>{{ categoria.Nombre }}</h3>
+                    <p>{{ categoria.Descripcion }}</p>
+                    <a href="{{ path('categoria_show', { 'id': categoria.id }) }}">Ver detalles</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

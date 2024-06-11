@@ -1,0 +1,13 @@
+{# gridProductosInicio.html.twig #}
+<div class="card-container">
+    {% if productos is not empty %}
+        {% for producto in productos|slice(0, 4) %}
+            <div class="card">
+                <h3>{{ producto.nombre }}</h3>
+                <p>Precio: {{ producto.precio }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No hay productos disponibles en este momento.</p>
+    {% endif %}
+</div>

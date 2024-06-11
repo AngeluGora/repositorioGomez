@@ -1,0 +1,11 @@
+{% extends 'tienda/index.html.twig' %}
+
+{% block title %}Detalles del Pedido{% endblock %}
+
+{% block main %}
+    <h1>Pedido #{{ pedido.id }}</h1>
+
+    <p>Fecha: {{ pedido.fecha|date('Y-m-d') }}</p>
+    <p>Total: {{ pedido.total }}</p>
+    <a href="{{ path('pedidos_index') }}">Volver a la lista</a>
+{% endblock %}

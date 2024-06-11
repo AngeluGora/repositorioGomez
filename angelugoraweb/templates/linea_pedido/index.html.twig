@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Líneas de Pedido{% endblock %}
+
+{% block main %}
+    <h1>Líneas de Pedido</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Pedido</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for linea in lineas_pedido %}
+                <tr>
+                    <td>{{ linea.id }}</td>
+                    <td>{{ linea.producto.nombre }}</td>
+                    <td>{{ linea.cantidad }}</td>
+                    <td>{{ linea.precio }}</td>
+                    <td>{{ linea.pedido.id }}</td>
+                    <td>
+                        <a href="{{ path('linea_pedido_show', { 'id': linea.id }) }}">Ver</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

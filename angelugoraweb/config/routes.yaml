@@ -1,0 +1,57 @@
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+app_index:
+    path: /
+    controller: App\Controller\GeneralController::index
+
+app_terminos:
+    path: /terminos-y-condiciones
+    controller: App\Controller\GeneralController::terminos
+
+app_aviso:
+    path: /aviso-legal
+    controller: App\Controller\GeneralController::aviso
+
+app_politica:
+    path: /politica-de-privacidad
+    controller: App\Controller\GeneralController::politica
+
+app_servicios:
+    path: /servicios
+    controller: App\Controller\GeneralController::servicios
+
+app_tienda:
+    path: /tienda
+    controller: App\Controller\GeneralController::tienda
+    
+app_contacto:
+    path: /contacto
+    controller: App\Controller\GeneralController::contacto
+
+app_todos_los_productos:
+    path: /tienda/productos
+    controller: App\Controller\TiendaController::productos
+
+app_categorias:
+    path: /tienda/categorias
+    controller: App\Controller\TiendaController::categorias
+
+app_buscar_producto:
+    path: /tienda/buscar
+    controller: App\Controller\TiendaController::buscar
+
+ver_todos_los_productos:
+    path: /todos-los-productos
+    controller: App\Controller\TiendaController::verTodosLosProductos
+
+ver_todas_las_categorias:
+    path: /todas-las-categorias
+    controller: App\Controller\TiendaController::verTodasLasCategorias
+
+ver_todas_novedades:
+    path: /todas-las-novedades
+    controller: App\Controller\TiendaController::verTodasLasNovedades
