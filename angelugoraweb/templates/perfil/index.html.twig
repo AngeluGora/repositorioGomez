@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block main %}
+    <div class="card mx-auto mb-5" style="max-width: 500px;">
+        <div class="card-body">
+            <h1 class="card-title">Bienvenido, {{ app.user.nombre }}</h1>
+            <h3 class="card-subtitle mb-2 text-muted" id="titulosSecundarios" >Esta es tu zona de usuario donde puedes ver y editar tu información. ¡Saludos!</h3>
+
+            <p id="textosGenerales2">Email: {{ app.user.email }}</p>
+            <p id="textosGenerales2">Nombre: {{ app.user.nombre }}</p>
+            <p id="textosGenerales2">Apellidos: {{ app.user.apellidos }}</p>
+            <p id="textosGenerales2">Dirección: {{ app.user.direccion }}</p>
+            <p id="textosGenerales2">Teléfono: {{ app.user.telefono }}</p>
+            <p id="textosGenerales2">Población: {{ app.user.poblacion }}</p>
+            <p id="textosGenerales2">Provincia: {{ app.user.provincia }}</p>
+            <p id="textosGenerales2">Código Postal:{{ app.user.codigoPostal }}</p>
+
+            <a href="{{ path('app_irEditar', {'id': app.user.id}) }}" class="btn btn-primary">Editar Información</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-secondary">Logout</a>
+            <a href="{{ path('delete_user', {'id': app.user.id}) }}" onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?')">Darse de Baja</button>
+        </div>
+    </div>
+{% endblock %}

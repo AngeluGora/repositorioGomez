@@ -25,6 +25,9 @@ class RegistrationFormType extends AbstractType
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
+                'label' => 'Acepto los términos y condiciones',
+                'label_attr' => ['class' => 'form-check-label'], // Clase para la etiqueta
+                'required' => true, // Esto asegura que el checkbox sea requerido
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
@@ -50,7 +53,6 @@ class RegistrationFormType extends AbstractType
             ->add('poblacion')
             ->add('provincia')
             ->add('codigoPostal')
-
         ;
     }
 

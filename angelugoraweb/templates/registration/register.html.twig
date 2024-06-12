@@ -3,24 +3,59 @@
 {% block title %}Register{% endblock %}
 
 {% block main %}
-    <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+<div class="container">
+    <h1 class="text-center">REGISTRO</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.nombre) }}
-        {{ form_row(registrationForm.apellidos) }}
-        {{ form_row(registrationForm.direccion) }}
-        {{ form_row(registrationForm.telefono) }}
-        {{ form_row(registrationForm.poblacion) }}
-        {{ form_row(registrationForm.provincia) }}
-        {{ form_row(registrationForm.codigoPostal) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    {% if form_errors(registrationForm) is not empty %}
+        <div class="alert alert-danger" role="alert">
+            {{ form_errors(registrationForm) }}
+        </div>
+    {% endif %}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+    <div class="custom-form-flex-container mb-5">
+        {{ form_start(registrationForm, {'attr': {'class': 'custom-form'}}) }}
+            <div class="flex-container">
+                <div class="form-group">
+                    {{ form_row(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.plainPassword, {'label': 'Password', 'attr': {'class': 'form-control', 'placeholder': 'Password'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.nombre, {'attr': {'class': 'form-control', 'placeholder': 'Nombre'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.apellidos, {'attr': {'class': 'form-control', 'placeholder': 'Apellidos'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.direccion, {'attr': {'class': 'form-control', 'placeholder': 'Dirección'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.telefono, {'attr': {'class': 'form-control', 'placeholder': 'Teléfono'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.poblacion, {'attr': {'class': 'form-control', 'placeholder': 'Población'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.provincia, {'attr': {'class': 'form-control', 'placeholder': 'Provincia'}}) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(registrationForm.codigoPostal, {'attr': {'class': 'form-control', 'placeholder': 'Código Postal'}}) }}
+                </div>
+                <div></div>
+                <div class="form-check">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                    <label class="form-check-label" for="{{ registrationForm.agreeTerms.vars.id }}">
+                        Acepto los términos y condiciones
+                        <a href="{{ path('app_terminos') }}">Términos y condiciones</a>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </div>
+        {{ form_end(registrationForm) }}
+    </div>
+</div>
+
+
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <h1 class="text-center">Editar Perfil</h1>
+
+        {% if form_errors(formulario) is not empty %}
+            <div class="alert alert-danger" role="alert">
+                {{ form_errors(formulario) }}
+            </div>
+        {% endif %}
+
+        <div class="custom-form-flex-container mb-5">
+            {{ form_start(formulario, {'attr': {'class': 'custom-form', 'action': path('app_editar_perfil', {'id': app.user.id}), 'method': 'POST'}}) }}
+                <div class="flex-container">
+                    <div class="form-group">
+                        {{ form_row(formulario.email, {'label': 'Correo electrónico', 'attr': {'class': 'form-control', 'placeholder': 'Email'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.password, {'label': 'Contraseña', 'attr': {'class': 'form-control', 'placeholder': 'Nueva contraseña (dejar en blanco para mantener la contraseña actual)'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.nombre, {'label': 'Nombre', 'attr': {'class': 'form-control', 'placeholder': 'Nombre'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.apellidos, {'label': 'Apellidos', 'attr': {'class': 'form-control', 'placeholder': 'Apellidos'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.direccion, {'label': 'Dirección', 'attr': {'class': 'form-control', 'placeholder': 'Dirección'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.telefono, {'label': 'Teléfono', 'attr': {'class': 'form-control', 'placeholder': 'Teléfono'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.poblacion, {'label': 'Población', 'attr': {'class': 'form-control', 'placeholder': 'Población'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.provincia, {'label': 'Provincia', 'attr': {'class': 'form-control', 'placeholder': 'Provincia'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(formulario.codigoPostal, {'label': 'Código Postal', 'attr': {'class': 'form-control', 'placeholder': 'Código Postal'}}) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Actualizar</button>
+                </div>
+            {{ form_end(formulario) }}
+        </div>
+    </div>
+{% endblock %}
+    

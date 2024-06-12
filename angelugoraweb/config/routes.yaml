@@ -55,3 +55,11 @@ ver_todas_las_categorias:
 ver_todas_novedades:
     path: /todas-las-novedades
     controller: App\Controller\TiendaController::verTodasLasNovedades
+
+app_irEditar:
+    path: '/user/{id}/irEdit'
+    controller: App\Controller\PerfilController::irEditar
+
+app_editar_perfil:
+    path: /user/{id}/editar
+    controller: App\Controller\PerfilController::editarPerfil
