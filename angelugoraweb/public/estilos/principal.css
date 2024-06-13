@@ -83,6 +83,9 @@ header .navbar .nav-link:hover {
         max-width: 150px; 
     }
 }
+a {
+    text-decoration: none !important;
+}
 
 main {
     flex: 1;

@@ -63,3 +63,7 @@ app_irEditar:
 app_editar_perfil:
     path: /user/{id}/editar
     controller: App\Controller\PerfilController::editarPerfil
+
+app_irARegister:
+    path: /irARegister
+    controller: App\Controller\RegistrationController::irARegister
