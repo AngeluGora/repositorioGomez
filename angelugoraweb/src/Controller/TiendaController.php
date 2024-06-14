@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ProductoRepository;
+use App\Repository\CategoriaRepository;
 
 class TiendaController extends AbstractController
 {
@@ -15,7 +17,7 @@ class TiendaController extends AbstractController
     public function verTodosLosProductos(ProductoRepository $productoRepository): Response
     {
         $productos = $productoRepository->findAll();
-        return $this->render('todosProductos.html.twig', [
+        return $this->render('tienda/gridTodosProductos.html.twig', [
             'productos' => $productos,
         ]);
     }
@@ -26,7 +28,7 @@ class TiendaController extends AbstractController
     public function verTodasLasCategorias(CategoriaRepository $categoriaRepository): Response
     {
         $categorias = $categoriaRepository->findAll();
-        return $this->render('todosCategorias.html.twig', [
+        return $this->render('tienda/gridTodasCategorias.html.twig', [
             'categorias' => $categorias,
         ]);
     }
@@ -36,8 +38,8 @@ class TiendaController extends AbstractController
      */
     public function verTodasLasNovedades(ProductoRepository $productoRepository): Response
     {
-        $novedades = $productoRepository->findNovedades();
-        return $this->render('todosNovedades.html.twig', [
+        $novedades = $productoRepository->buscarNovedades();
+        return $this->render('tienda/gridTodasNovedades.html.twig', [
             'novedades' => $novedades,
         ]);
     }

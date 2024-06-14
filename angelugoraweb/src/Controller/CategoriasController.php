@@ -2,29 +2,82 @@
 
 namespace App\Controller;
 
-use App\Entity\Categorias;
-use App\Repository\CategoriasRepository;
+use App\Entity\Categoria;
+use App\Repository\CategoriaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CategoriasController extends AbstractController
 {
     #[Route('/categorias', name: 'categorias_index')]
-    public function index(CategoriasRepository $categoriasRepository): Response
+    public function index(CategoriaRepository $categoriaRepository): Response
     {
-        $categorias = $categoriasRepository->findAll();
+        $categorias = $categoriaRepository->findAll();
 
         return $this->render('categorias/index.html.twig', [
             'categorias' => $categorias,
         ]);
     }
 
-    #[Route('/categoria/{id}', name: 'categoria_show')]
-    public function show(Categorias $categoria): Response
+    #[Route('/categoria/nuevo', name: 'categoria_nuevo')]
+    public function new(): Response
     {
-        return $this->render('categorias/show.html.twig', [
+        return $this->render('categorias/nuevo.html.twig');
+    }
+
+    #[Route('/categoria/crear', name: 'categoria_crear', methods: ['POST'])]
+    public function create(Request $request, CategoriaRepository $categoriaRepository): Response
+    {
+        $nombre = strtoupper($request->request->get('nombre'));
+        $descripcion = $request->request->get('descripcion');
+
+        $categoria = new Categoria();
+        $categoria->setNombre($nombre);
+        $categoria->setDescripcion($descripcion);
+
+        $categoriaRepository->save($categoria);
+
+        return $this->redirectToRoute('categorias_index');
+    }
+
+    #[Route('/categoria/{id}', name: 'categoria_ver')]
+    public function show(Categoria $categoria): Response
+    {
+        return $this->render('categorias/ver.html.twig', [
             'categoria' => $categoria,
         ]);
+    }
+
+    #[Route('/categoria/{id}/editar', name: 'categoria_editar')]
+    public function edit(Categoria $categoria): Response
+    {
+        return $this->render('categorias/editar.html.twig', [
+            'categoria' => $categoria,
+        ]);
+    }
+
+    #[Route('/categoria/{id}/update', name: 'categoria_update', methods: ['POST'])]
+    public function update(Request $request, Categoria $categoria, CategoriaRepository $categoriaRepository): Response
+    {
+        $nombre = strtoupper($request->request->get('nombre'));
+        $descripcion = $request->request->get('descripcion');
+
+        $categoria->setNombre($nombre);
+        $categoria->setDescripcion($descripcion);
+
+        $categoriaRepository->save($categoria);
+
+        return $this->redirectToRoute('categorias_index');
+    }
+
+    #[Route('/categoria/{id}/eliminar', name: 'categoria_eliminar', methods: ['POST'])]
+    public function delete(Categoria $categoria, CategoriaRepository $categoriaRepository): Response
+    {
+        $categoriaRepository->eliminarCategoriaYProductos($categoria);
+
+
+        return $this->redirectToRoute('categorias_index');
     }
 }

@@ -1,27 +1,37 @@
 {# gridInicioTienda.html.twig #}
 <div class="grid-container">
-    <div class="novedades">
-        <h2>Novedades</h2>
-        {% include 'tienda/gridNovedadesInicio.html.twig' with {
+	<div class="novedades">
+		<h2>Novedades</h2>
+		{% include 'tienda/gridNovedadesInicio.html.twig' with {
             'novedades': novedades
             }
         %}
 
-    </div>
+	</div>
 
-    <div class="todos-productos">
-        <h2>Todos los productos</h2>
-        {% include 'tienda/gridProductosInicio.html.twig'  with {
+	<div class="todos-productos">
+		<h2>Todos los productos</h2>
+		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
+			<a href="{{ path('producto_nuevo') }}">
+				<button>Crear Nuevo Producto</button>
+			</a>
+		{% endif %}
+		{% include 'tienda/gridProductosInicio.html.twig'  with {
             'productos': productos
             }
         %}
-    </div>
+	</div>
 
-    <div class="categorias">
-        <h2>Categorías</h2>
-        {% include 'tienda/gridCategoriasInicio.html.twig'  with {
+	<div class="categorias">
+		<h2>Categorías</h2>
+		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
+			<a href="{{ path('categoria_nuevo') }}">
+				<button>Crear Nueva Categoría</button>
+			</a>
+		{% endif %}
+		{% include 'tienda/gridCategoriasInicio.html.twig'  with {
             'categorias': categorias
             }
         %}
-    </div>
+	</div>
 </div>

@@ -5,39 +5,39 @@ namespace App\Repository;
 use App\Entity\Categoria;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\DBAL\Connection;
 
-/**
- * @extends ServiceEntityRepository<Categoria>
- */
 class CategoriaRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+    private $productoRepository;
+
+    public function __construct(ManagerRegistry $registry, ProductoRepository $productoRepository)
     {
         parent::__construct($registry, Categoria::class);
+        $this->productoRepository = $productoRepository;
     }
 
-    //    /**
-    //     * @return Categoria[] Returns an array of Categoria objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function save(Categoria $categoria): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($categoria);
+        $entityManager->flush();
+    }
 
-    //    public function findOneBySomeField($value): ?Categoria
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function eliminarCategoriaYProductos(Categoria $categoria): void
+    {
+        $productos = $this->productoRepository->findByCategoria($categoria);
+
+        $entityManager = $this->getEntityManager();
+
+        foreach ($productos as $producto) {
+            $entityManager->remove($producto);
+        }
+
+        $entityManager->flush();
+
+        $entityManager->remove($categoria);
+        $entityManager->flush();
+    }
 }

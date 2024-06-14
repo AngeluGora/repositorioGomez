@@ -1,0 +1,12 @@
+{# templates/categorias/ver.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Ver Categoría{% endblock %}
+
+{% block main %}
+    <h1>{{ categoria.nombre }}</h1>
+    <p><strong>Descripción:</strong> {{ categoria.descripcion }}</p>
+
+    <a href="{{ path('categorias_index') }}">Volver a la lista</a>
+{% endblock %}

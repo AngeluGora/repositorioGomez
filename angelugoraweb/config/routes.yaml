@@ -67,3 +67,73 @@ app_editar_perfil:
 app_irARegister:
     path: /irARegister
     controller: App\Controller\RegistrationController::irARegister
+
+productos_index:
+    path: /productos
+    controller: App\Controller\ProductosController::index
+    methods: [GET]
+
+producto_nuevo:
+    path: /producto/nuevo
+    controller: App\Controller\ProductosController::new
+    methods: [GET]
+
+producto_create:
+    path: /producto/create
+    controller: App\Controller\ProductosController::create
+    methods: [POST]
+
+producto_ver:
+    path: /producto/{id}
+    controller: App\Controller\ProductosController::show
+    methods: [GET]
+
+producto_editar:
+    path: /producto/{id}/editar
+    controller: App\Controller\ProductosController::edit
+    methods: [GET]
+
+producto_actualizar:
+    path: /producto/{id}/actualizar
+    controller: App\Controller\ProductosController::update
+    methods: [POST]
+
+producto_eliminar:
+    path: /producto/{id}/eliminar
+    controller: App\Controller\ProductosController::delete
+    methods: [POST]
+
+categorias_index:
+    path: /categorias
+    controller: 'App\Controller\CategoriasController::index'
+    methods: ['GET']
+
+categoria_nuevo:
+    path: /categoria/nuevo
+    controller: 'App\Controller\CategoriasController::new'
+    methods: ['GET']
+
+categoria_crear:
+    path: /categoria/crear
+    controller: 'App\Controller\CategoriasController::create'
+    methods: ['POST']
+
+categoria_ver:
+    path: /categoria/{id}
+    controller: 'App\Controller\CategoriasController::show'
+    methods: ['GET']
+
+categoria_editar:
+    path: /categoria/{id}/editar
+    controller: 'App\Controller\CategoriasController::edit'
+    methods: ['GET']
+
+categoria_update:
+    path: /categoria/{id}/update
+    controller: 'App\Controller\CategoriasController::update'
+    methods: ['POST']
+
+categoria_delete:
+    path: /categoria/{id}/delete
+    controller: 'App\Controller\CategoriasController::delete'
+    methods: ['POST']

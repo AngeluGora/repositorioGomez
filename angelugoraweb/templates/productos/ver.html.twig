@@ -1,0 +1,36 @@
+{# templates/productos/ver.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalles del Producto{% endblock %}
+
+{% block main %}
+    <h1>Detalles del Producto</h1>
+
+    <dl class="row">
+        <dt class="col-sm-3">ID:</dt>
+        <dd class="col-sm-9">{{ producto.id }}</dd>
+
+        <dt class="col-sm-3">Nombre:</dt>
+        <dd class="col-sm-9">{{ producto.nombre }}</dd>
+
+        <dt class="col-sm-3">Precio:</dt>
+        <dd class="col-sm-9">{{ producto.precio }}</dd>
+
+        <dt class="col-sm-3">Descripción:</dt>
+        <dd class="col-sm-9">{{ producto.descripcion }}</dd>
+
+        <dt class="col-sm-3">Categoría:</dt>
+        <dd class="col-sm-9">{{ producto.categoria.nombre }}</dd>
+
+        <dt class="col-sm-3">Novedad:</dt>
+        <dd class="col-sm-9">{{ producto.novedad ? 'Sí' : 'No' }}</dd>
+    </dl>
+
+    <a href="{{ path('productos_index') }}" class="btn btn-primary">Volver a la Lista</a>
+    <a href="{{ path('producto_editar', {'id': producto.id}) }}" class="btn btn-secondary">Editar Producto</a>
+    <form action="{{ path('producto_eliminar', {'id': producto.id}) }}" method="post" style="display: inline-block;">
+        <input type="hidden" name="_token" value="{{ csrf_token('eliminar' ~ producto.id) }}">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este producto?')">Eliminar Producto</button>
+    </form>
+{% endblock %}

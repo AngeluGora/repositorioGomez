@@ -1,0 +1,23 @@
+{# templates/categorias/editar.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Categoría{% endblock %}
+
+{% block main %}
+    <h1>Editar Categoría</h1>
+
+    <form action="{{ path('categoria_update', {id: categoria.id}) }}" method="post">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="{{ categoria.nombre }}" required>
+        </div>
+        <div>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="4" required>{{ categoria.descripcion }}</textarea>
+        </div>
+        <button type="submit">Actualizar Categoría</button>
+    </form>
+
+    <a href="{{ path('categorias_index') }}">Volver a la lista</a>
+{% endblock %}

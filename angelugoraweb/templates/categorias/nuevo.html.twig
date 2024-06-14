@@ -1,0 +1,23 @@
+{# templates/categorias/nuevo.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Nueva Categoría{% endblock %}
+
+{% block main %}
+    <h1>Nueva Categoría</h1>
+
+    <form action="{{ path('categoria_crear') }}" method="post">
+        <div>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+        </div>
+        <button type="submit">Crear Categoría</button>
+    </form>
+
+    <a href="{{ path('categorias_index') }}">Volver a la lista</a>
+{% endblock %}

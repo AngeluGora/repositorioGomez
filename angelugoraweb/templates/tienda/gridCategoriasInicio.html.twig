@@ -1,20 +1,35 @@
-{# gridCategoriasInicio.html.twig #}
 <div class="card-container">
 	{% if categorias is not empty %}
-		{% for categoria in categorias|slice(0, 3) %}
-			<div class="card">
-				<h3>{{ categoria.nombre }}</h3>
-				<p>{{ categoria.descripcion }}</p>
-			</div>
-		{% endfor %}
-
-        <a href="{{ path('ver_todas_las_categorias') }}">Ver todas las categorías</a>
+		<div class="row">
+			{% for categoria in categorias|slice(0, 4) %}
+				<div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+					<div
+						class="card">
+						{# <img src="{{ asset('uploads/productos/' ~ producto.imagen) }}" class="card-img-top" alt="{{ producto.nombre }}"> #}
+						<div class="card-body">
+							<a href="{{ path('categoria_ver', {'id': categoria.id}) }}">
+								<h5 class="card-title" id="titulosSecundarios">{{ categoria.nombre }}</h5>
+								<p class="card-text" id="textosGenerales">{{ categoria.descripcion }}</p>
+							</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		<a href="{{ path('ver_todas_las_categorias') }}">
+			<button>Ver todas las categorías</button>
+		</a>
+		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
+			<a href="{{ path('categorias_index') }}">
+				<button>Administrar Categorias</button>
+			</a>
+		{% endif %}
 	{% else %}
 		<div class="container-fluid">
 			<div class="row justify-content-center align-items-center">
 				<div class="card-container">
 					<div class="card w-50 text-center">
-						<p  id="textosGenerales2">No hay categorías disponibles en este momento.</p>
+						<p id="textosGenerales2">No hay categorías disponibles en este momento.</p>
 					</div>
 				</div>
 			</div>
