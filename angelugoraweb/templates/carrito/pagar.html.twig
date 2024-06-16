@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pagar con Tarjeta{% endblock %}
+
+{% block main %}
+    <div class="container mt-5 mb-5">
+        <h1>Pagar con Tarjeta</h1>
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <form method="post" action="{{ path('procesar_pago', {'pedidoId': pedidoId}) }}">
+            <input type="hidden" name="userId" value="{{ userId }}">
+            <input type="hidden" name="pedidoId" value="{{ pedidoId }}">
+            <input type="hidden" name="precioFinal" value="{{ precioFinal }}">
+            
+            <div class="form-group">
+                <label for="nombre">Nombre en la Tarjeta</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="numero">Número de Tarjeta</label>
+                <input type="text" class="form-control" id="numero" name="numero" required>
+            </div>
+            <div class="form-group">
+                <label for="fecha">Fecha de Vencimiento</label>
+                <input type="text" class="form-control" id="fecha" name="fecha" placeholder="MM/AA" required>
+            </div>
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" class="form-control" id="cvv" name="cvv" maxlength="3" required>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Pagar Ahora</button>
+        </form>
+    </div>
+{% endblock %}

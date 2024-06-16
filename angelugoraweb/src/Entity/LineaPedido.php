@@ -17,7 +17,7 @@ class LineaPedido
     private ?int $cantidad = null;
 
     #[ORM\ManyToOne(inversedBy: 'lineaPedidos')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Pedido $pedido = null;
 
     #[ORM\ManyToOne(inversedBy: 'lineaPedidos')]

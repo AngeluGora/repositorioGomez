@@ -1,52 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Detalles del Producto{% endblock %}
-
+{% block title %}Detalles del Producto -
+	{{ producto.nombre }}
+{% endblock %}
 
 {% block main %}
-    <div class="product-details">
-        <h1>{{ producto.nombre }}</h1>
-        <div class="product-info">
-            <div class="productImagen">
-                {# Mostrar imagen principal #}
-                {% for foto in fotos %}
-                    {% if foto.isPrincipal() %}
-                        <div class="imagen-container">
-                            <img src="{{ asset('imagenes/productos/' ~ foto.getNombre()) }}" class="card-img-top" alt="{{ producto.nombre }}">
-                        </div>
-                    {% endif %}
-                {% endfor %}
-            </div>
+	<div class="product-details">
+		<h1>{{ producto.nombre }}</h1>
+		<div class="product-info">
+			<div class="productImagen">
+				{% for foto in fotos %}
+					{% if foto.isPrincipal() %}
+						<div class="imagen-container">
+							<img src="{{ asset('imagenes/productos/' ~ foto.getNombre()) }}" class="card-img-top" alt="{{ producto.nombre }}">
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
 
-            <div class="product-description">
-                <p class="price">{{ producto.precio }} €</p>
-                <p class="description">{{ producto.descripcion }}</p>
-                <p class="category">Categoría: {{ producto.categoria.nombre }}</p>
-                <p class="new">{{ producto.novedad ? '¡Novedad!' : '' }}</p>
-            </div>
-        </div>
+			<div class="product-description">
+				<p class="price">{{ producto.precio }}
+					€</p>
+				<p class="description">{{ producto.descripcion }}</p>
+				<p class="category">Categoría:
+					{{ producto.categoria.nombre }}</p>
+				<p class="new">{{ producto.novedad ? '¡Novedad!' : '' }}</p>
 
-        {% if fotos|length > 1 %}
-            <div class="additional-images">
-                <div class="additional-images-container">
-                    {% for foto in fotos %}
-                        {% if not foto.isPrincipal() %}
-                            <div class="imagen-container">
-                                <img src="{{ asset('imagenes/productos/' ~ foto.getNombre()) }}" class="additional-img" alt="{{ producto.nombre }}">
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-        {% endif %}
+				<form method="post" action="{{ path('carrito_agregar', {'id': producto.id}) }}">
+					<label for="cantidad">Cantidad:</label>
+					<input type="number" id="cantidad" name="cantidad" value="1" min="1">
+					{% if app.user %}
+						<input type="hidden" name="usuario_id" value="{{ app.user.id }}">
+					{% endif %}
+					<button type="submit" class="btn btn-primary mt-3">Añadir al Carrito</button>
+				</form>
+			</div>
+		</div>
 
-        <div class="product-actions">
-            <a href="{{ path('ver_todos_los_productos') }}">
-                <button class="customButton mt-3">Lista de Productos</button>
-            </a>
-            <a href="{{ path('app_tienda') }}">
-                <button class="customButton mt-3">Volver a la tienda</button>
-            </a>
-        </div>
-    </div>
+		{% if fotos|length > 1 %}
+			<div class="additional-images">
+				<div class="additional-images-container">
+					{% for foto in fotos %}
+						{% if not foto.isPrincipal() %}
+							<div class="imagen-container">
+								<img src="{{ asset('imagenes/productos/' ~ foto.getNombre()) }}" class="additional-img" alt="{{ producto.nombre }}">
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="product-actions">
+			<a href="{{ path('ver_todos_los_productos') }}">
+				<button class="customButton mt-3">Lista de Productos</button>
+			</a>
+			<a href="{{ path('app_tienda') }}">
+				<button class="customButton mt-3">Volver a la tienda</button>
+			</a>
+		</div>
+	</div>
 {% endblock %}

@@ -20,19 +20,21 @@ class Pedido
     private ?\DateTimeInterface $fecha = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $estado = null;
+    private ?string $estado = 'pendiente';
 
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
-    private ?string $totalPrecio = null;
+    private ?string $totalPrecio = '0.00';
 
-    /**
-     * @var Collection<int, LineaPedido>
-     */
-    #[ORM\OneToMany(targetEntity: LineaPedido::class, mappedBy: 'pedido')]
+    #[ORM\OneToMany(targetEntity: LineaPedido::class, mappedBy: 'pedido', cascade: ['persist', 'remove'])]
     private Collection $lineaPedidos;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'pedidos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $usuario;
 
     public function __construct()
     {
+        $this->fecha = new \DateTimeImmutable();
         $this->lineaPedidos = new ArrayCollection();
     }
 
@@ -46,7 +48,7 @@ class Pedido
         return $this->fecha;
     }
 
-    public function setFecha(\DateTimeInterface $fecha): static
+    public function setFecha(\DateTimeInterface $fecha): self
     {
         $this->fecha = $fecha;
 
@@ -58,34 +60,31 @@ class Pedido
         return $this->estado;
     }
 
-    public function setEstado(string $estado): static
+    public function setEstado(string $estado): self
     {
         $this->estado = $estado;
 
         return $this;
     }
 
-    public function getTotalPrecio(): ?string
+    public function getTotalPrecio(): ?float
     {
         return $this->totalPrecio;
     }
 
-    public function setTotalPrecio(string $totalPrecio): static
+    public function setTotalPrecio(?float $totalPrecio): self
     {
         $this->totalPrecio = $totalPrecio;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, LineaPedido>
-     */
     public function getLineaPedidos(): Collection
     {
         return $this->lineaPedidos;
     }
 
-    public function addLineaPedido(LineaPedido $lineaPedido): static
+    public function addLineaPedido(LineaPedido $lineaPedido): self
     {
         if (!$this->lineaPedidos->contains($lineaPedido)) {
             $this->lineaPedidos->add($lineaPedido);
@@ -95,7 +94,7 @@ class Pedido
         return $this;
     }
 
-    public function removeLineaPedido(LineaPedido $lineaPedido): static
+    public function removeLineaPedido(LineaPedido $lineaPedido): self
     {
         if ($this->lineaPedidos->removeElement($lineaPedido)) {
             // set the owning side to null (unless already changed)
@@ -103,6 +102,18 @@ class Pedido
                 $lineaPedido->setPedido(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUsuario(): ?User
+    {
+        return $this->usuario;
+    }
+
+    public function setUsuario(?User $usuario): self
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }

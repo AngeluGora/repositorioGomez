@@ -16,28 +16,39 @@ class PedidoRepository extends ServiceEntityRepository
         parent::__construct($registry, Pedido::class);
     }
 
-    //    /**
-    //     * @return Pedido[] Returns an array of Pedido objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function add(Pedido $pedido, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($pedido);
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
 
-    //    public function findOneBySomeField($value): ?Pedido
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function remove(Pedido $pedido, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($pedido);
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function findPedidosByUserId(int $userId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.usuario = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPedidoByIdAndUserId(int $pedidoId, int $userId): ?Pedido
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.id = :pedidoId')
+            ->andWhere('p.usuario = :userId')
+            ->setParameter('pedidoId', $pedidoId)
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

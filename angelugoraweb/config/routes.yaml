@@ -137,3 +137,25 @@ categoria_delete:
     path: /categoria/{id}/delete
     controller: 'App\Controller\CategoriasController::delete'
     methods: ['POST']
+
+carrito_ver:
+    path: /carrito
+    controller: App\Controller\CarritoController::verCarrito
+
+carrito_agregar:
+    path: /carrito/agregar/{id}
+    controller: App\Controller\CarritoController::agregarProducto
+    methods: ['POST']
+
+carrito_vaciar:
+    path: /carrito/vaciar
+    controller: App\Controller\CarritoController::vaciarCarrito
+    methods: ['POST']
+
+procesar_pago:
+    path: /procesar-pago
+    controller: App\Controller\PagoController::procesarPago
+
+ir_a_pagar:
+    path: /carrito/ir-a-pagar
+    controller: App\Controller\PagoController::irAPagar

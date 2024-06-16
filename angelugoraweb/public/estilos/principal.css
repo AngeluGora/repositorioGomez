@@ -864,3 +864,27 @@ footer ul li {
     margin-top: 20px;
     text-align: center;
 }
+
+.product-name {
+    font-weight: 500;
+}
+
+.product-price {
+    font-size: 0.875rem;
+}
+
+.total-price {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #d35400;
+}
+
+.btn-checkout {
+    background-color: #FF9900;
+    border-color: #FF9900;
+}
+
+.btn-checkout:hover {
+    background-color: #FFA500;
+    border-color: #FFA500;
+}

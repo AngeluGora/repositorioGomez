@@ -1,25 +1,87 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Perfil
+{% endblock %}
 
 {% block main %}
-    <div class="card mx-auto mb-5" style="max-width: 500px;">
+	<div class="container mt-5 mb-5">
+		<div class="row justify-content-center">
+			<div class="col-md-12 text-center">
+				<h1>Bienvenido,
+					{{ app.user.nombre }}</h1>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4 mb-3">
+				<div class="card">
+					<div class="card-body">
+						<h3 class="card-title" id="titulosSecundarios">Información del Usuario</h3>
+						<p id="textosGenerales2">Email:
+							{{ app.user.email }}</p>
+						<p id="textosGenerales2">Nombre:
+							{{ app.user.nombre }}</p>
+						<p id="textosGenerales2">Apellidos:
+							{{ app.user.apellidos }}</p>
+						<p id="textosGenerales2">Dirección:
+							{{ app.user.direccion }}</p>
+						<p id="textosGenerales2">Teléfono:
+							{{ app.user.telefono }}</p>
+						<p id="textosGenerales2">Población:
+							{{ app.user.poblacion }}</p>
+						<p id="textosGenerales2">Provincia:
+							{{ app.user.provincia }}</p>
+						<p id="textosGenerales2">Código Postal:
+							{{ app.user.codigoPostal }}</p>
+
+						<div class="row justify-content-center">
+							<div class="col-12 mb-4">
+								<a href="{{ path('app_irEditar', {'id': app.user.id}) }}" class="customButton btn-block">Editar Perfil</a>
+							</div>
+							<div class="col-12 mb-4">
+								<a href="{{ path('app_logout') }}" class="customButton btn-block">Cerrar sesión</a>
+							</div>
+							<div class="col-12 mb-4">
+								<a href="{{ path('delete_user', {'id': app.user.id}) }}" onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?')" class="customButton btn-block">Darse de Baja</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-8 mb-3">
+    <div class="card">
         <div class="card-body">
-            <h1 class="card-title">Bienvenido, {{ app.user.nombre }}</h1>
-            <h3 class="card-subtitle mb-2 text-muted" id="titulosSecundarios" >Esta es tu zona de usuario donde puedes ver y editar tu información. ¡Saludos!</h3>
-
-            <p id="textosGenerales2">Email: {{ app.user.email }}</p>
-            <p id="textosGenerales2">Nombre: {{ app.user.nombre }}</p>
-            <p id="textosGenerales2">Apellidos: {{ app.user.apellidos }}</p>
-            <p id="textosGenerales2">Dirección: {{ app.user.direccion }}</p>
-            <p id="textosGenerales2">Teléfono: {{ app.user.telefono }}</p>
-            <p id="textosGenerales2">Población: {{ app.user.poblacion }}</p>
-            <p id="textosGenerales2">Provincia: {{ app.user.provincia }}</p>
-            <p id="textosGenerales2">Código Postal:{{ app.user.codigoPostal }}</p>
-
-            <a href="{{ path('app_irEditar', {'id': app.user.id}) }}" class="btn btn-primary">Editar Información</a>
-            <a href="{{ path('app_logout') }}" class="btn btn-secondary">Logout</a>
-            <a href="{{ path('delete_user', {'id': app.user.id}) }}" onclick="return confirm('¿Estás seguro de que quieres eliminar este usuario?')">Darse de Baja</button>
+            <h3 class="card-title" id="titulosSecundarios">Pedidos Realizados</h3>
+            {% if pedidos is empty %}
+                <p id="textosGenerales2">No has realizado pedidos aún.</p>
+            {% else %}
+                <div class="table-responsive">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Fecha del Pedido</th>
+                                <th>Estado</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pedido in pedidos %}
+                                <tr>
+                                    <td>{{ pedido.fecha|date('d/m/Y') }}</td>
+                                    <td>{{ pedido.estado }}</td>
+                                    <td>{{ pedido.totalPrecio }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
         </div>
     </div>
+</div>
+
+		</div>
+	</div>
 {% endblock %}

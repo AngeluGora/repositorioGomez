@@ -11,14 +11,25 @@ use App\Repository\UserRepository;
 use App\Form\EditarUsuarioFormType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Repository\PedidoRepository;
 
 class PerfilController extends AbstractController
 {
-    #[Route('/perfil', name: 'app_perfil')]
-    public function index(): Response
+    private $userRepository;
+
+    public function __construct(UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository;
+    }
+
+    #[Route('/perfil', name: 'app_perfil')]
+    public function index(PedidoRepository $pedidoRepository): Response
+    {
+        $userId = $this->getUser()->getId();
+        $pedidos = $pedidoRepository->findPedidosByUserId($userId);
+
         return $this->render('perfil/index.html.twig', [
-            'controller_name' => 'PerfilController',
+            'pedidos' => $pedidos,
         ]);
     }
 
@@ -30,8 +41,12 @@ class PerfilController extends AbstractController
         if (!$user) {
             throw $this->createNotFoundException('No se encontró ningún usuario con el ID proporcionado.');
         }
+
         $userRepository->deleteUser($user);
-        return new RedirectResponse($this->generateUrl('app_index'));
+
+        $this->addFlash('success', 'Usuario eliminado correctamente.');
+
+        return $this->redirectToRoute('app_index');
     }
     
     #[Route('/user/{id}/irEdit', name: 'app_irEditar')]
