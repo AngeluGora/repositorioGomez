@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categoria;
 use App\Repository\CategoriaRepository;
+use App\Repository\ProductoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,10 +44,12 @@ class CategoriasController extends AbstractController
     }
 
     #[Route('/categoria/{id}', name: 'categoria_ver')]
-    public function show(Categoria $categoria): Response
+    public function show(Categoria $categoria, ProductoRepository $productoRepository): Response
     {
+        $productos = $productoRepository->findByCategoria($categoria);
         return $this->render('categorias/ver.html.twig', [
             'categoria' => $categoria,
+            'productos' => $productos,
         ]);
     }
 

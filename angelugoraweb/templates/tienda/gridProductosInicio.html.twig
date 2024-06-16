@@ -18,11 +18,14 @@
 			{% endfor %}
 		</div>
 		<a href="{{ path('ver_todos_los_productos') }}">
-			<button>Ver todos los productos</button>
+			<button class="customButton">Ver todos los productos</button>
 		</a>
 		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
 			<a href="{{ path('productos_index') }}">
-				<button>Administrar Productos</button>
+				<button class="customButton2">Administrar Productos</button>
+			</a>
+			<a href="{{ path('producto_nuevo') }}">
+				<button class="customButton2">Crear Nuevo Producto</button>
 			</a>
 		{% endif %}
 	{% else %}
