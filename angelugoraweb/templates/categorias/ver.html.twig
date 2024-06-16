@@ -2,34 +2,52 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Categoría - {{ categoria.nombre }}{% endblock %}
+{% block title %}Categoría -
+	{{ categoria.nombre }}
+{% endblock %}
 
 {% block main %}
-    <div class="category-details">
-        <h1>{{ categoria.nombre }}</h1>
-        {% if categoria.descripcion %}
-            <p class="category-description">{{ categoria.descripcion }}</p>
-        {% endif %}
+	<div class="category-details">
+		<h1>{{ categoria.nombre }}</h1>
+		{% if categoria.descripcion %}
+			<p class="category-description">{{ categoria.descripcion }}</p>
+		{% endif %}
 
-        <div class="category-products">
-            <h2>Productos en esta categoría:</h2>
-            {% if productos|length > 0 %}
-                <div class="product-list">
-                    {% for producto in productos %}
-                        <div class="product-item">
-                            <img src="{{ asset('images/product-placeholder.png') }}" alt="{{ producto.nombre }}">
-                            <h3>{{ producto.nombre }}</h3>
-                            <p class="price">{{ producto.precio }} €</p>
-                            <p>{{ producto.descripcion }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <p>No hay productos disponibles en esta categoría.</p>
-            {% endif %}
-        </div>
+		<div class="category-products">
+			<h2>Productos en esta categoría:</h2>
+			{% if productos|length > 0 %}
+				<div class="product-list">
+					{% for producto in productos %}
+						<div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+							<div class="card">
+								<a href="{{ path('producto_ver', {'id': producto.id}) }}">
+									{% for foto in fotos %}
+										{% if foto.getProducto().getId() == producto.getId() and foto.isPrincipal() %}
+											<div class="imagen-container">
+												<img src="{{ asset('imagenes/productos/' ~ foto.getNombre()) }}" class="card-img-top" alt="{{ producto.getNombre }}">
+											</div>
+										{% endif %}
+									{% endfor %}
+									<div class="card-body">
+										<h5 class="card-title" id="titulosSecundarios">{{ producto.nombre }}</h5>
+										<p class="card-text" id="textosGenerales">{{ producto.descripcion }}</p>
+										<p class="card-text" id="textosGenerales">{{ producto.precio }}€</p>
+									</div>
+								</a>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			{% else %}
+				<p id="textosGenerales2">No hay productos disponibles en esta categoría.</p>
+			{% endif %}
+		</div>
 
-        <a href="{{ path('ver_todas_las_categorias') }}"><button class="customButton mt-3">Volver a la Lista de Categorías</button></a>
-        <a href="{{ path('app_tienda') }}"><button class="customButton mt-3">Volver a la tienda</button></a>
-    </div>
+		<a href="{{ path('ver_todas_las_categorias') }}">
+			<button class="customButton mt-3">Volver a la Lista de Categorías</button>
+		</a>
+		<a href="{{ path('app_tienda') }}">
+			<button class="customButton mt-3">Volver a la tienda</button>
+		</a>
+	</div>
 {% endblock %}

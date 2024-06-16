@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Entity\Producto;
 use App\Repository\CategoriaRepository;
 use App\Repository\ProductoRepository;
+use App\Repository\FotoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Foto;
 
 class ProductosController extends AbstractController
 {
@@ -33,7 +35,7 @@ class ProductosController extends AbstractController
     }
 
     #[Route('/producto/create', name: 'producto_create', methods: ['POST'])]
-    public function create(Request $request, ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository): Response
+    public function create(Request $request, ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository, FotoRepository $fotoRepository): Response
     {
         $producto = new Producto();
         $producto->setNombre($request->request->get('nombre'));
@@ -43,40 +45,87 @@ class ProductosController extends AbstractController
 
         $categoriaId = $request->request->get('categoria');
         $categoria = $categoriaRepository->find($categoriaId);
-
         if (!$categoria) {
             throw $this->createNotFoundException('La categoría seleccionada no existe.');
         }
-
         $producto->setCategoria($categoria);
 
-        // Utilizar el método del repositorio para guardar el producto
         $productoRepository->guardar($producto);
+
+        $imagenPrincipalFile = $request->files->get('imagenPrincipal');
+        if ($imagenPrincipalFile) {
+            $nombreArchivo = md5(uniqid()) . '.' . $imagenPrincipalFile->guessExtension();
+            $imagenPrincipalFile->move(
+                $this->getParameter('fotos_directorio'),
+                $nombreArchivo
+            );
+
+            $fotoPrincipal = new Foto();
+            $fotoPrincipal->setNombre($nombreArchivo);
+            $fotoPrincipal->setPrincipal(true);
+            $fotoPrincipal->setProducto($producto);
+
+            $fotoRepository->guardar($fotoPrincipal);
+        }
+
+        $imagenesAdicionalesFiles = $request->files->get('imagenesAdicionales');
+        if ($imagenesAdicionalesFiles) {
+            foreach ($imagenesAdicionalesFiles as $imagenFile) {
+                $nombreArchivo = md5(uniqid()) . '.' . $imagenFile->guessExtension();
+                $imagenFile->move(
+                    $this->getParameter('fotos_directorio'),
+                    $nombreArchivo
+                );
+
+                $fotoAdicional = new Foto();
+                $fotoAdicional->setNombre($nombreArchivo);
+                $fotoAdicional->setPrincipal(false);
+                $fotoAdicional->setProducto($producto);
+
+                $fotoRepository->guardar($fotoAdicional);
+            }
+        }
 
         return $this->redirectToRoute('productos_index');
     }
 
     #[Route('/producto/{id}', name: 'producto_ver', methods: ['GET'])]
-    public function show(Producto $producto): Response
+    public function show(Producto $producto, FotoRepository $fotoRepository): Response
     {
+        $fotos = $fotoRepository->findBy(['producto' => $producto]);
+
         return $this->render('productos/ver.html.twig', [
             'producto' => $producto,
+            'fotos' => $fotos,
         ]);
     }
 
+
     #[Route('/producto/{id}/editar', name: 'producto_editar', methods: ['GET'])]
-    public function edit(Producto $producto, CategoriaRepository $categoriaRepository): Response
+    public function edit(Producto $producto, CategoriaRepository $categoriaRepository, FotoRepository $fotoRepository): Response
     {
         $categorias = $categoriaRepository->findAll();
+        
+        $fotoPrincipal = null;
+        foreach ($fotoRepository->findAll() as $foto) {
+            if ($foto->getProducto()->getId() === $producto->getId() && $foto->isPrincipal()) {
+                $fotoPrincipal = $foto;
+                break;
+            }
+        }
+
+        $fotos = $fotoRepository->findAll();
 
         return $this->render('productos/editar.html.twig', [
             'producto' => $producto,
             'categorias' => $categorias,
+            'fotos' => $fotos,
+            'fotoPrincipal' => $fotoPrincipal,
         ]);
     }
 
     #[Route('/producto/{id}/actualizar', name: 'producto_actualizar', methods: ['POST'])]
-    public function update(Request $request, Producto $producto, ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository): Response
+    public function update(Request $request, Producto $producto, ProductoRepository $productoRepository, CategoriaRepository $categoriaRepository, FotoRepository $fotoRepository): Response
     {
         $producto->setNombre($request->request->get('nombre'));
         $producto->setPrecio($request->request->get('precio'));
@@ -92,7 +141,50 @@ class ProductosController extends AbstractController
 
         $producto->setCategoria($categoria);
 
-        // Utilizar el método del repositorio para actualizar el producto
+        $imagenPrincipalFile = $request->files->get('imagenPrincipal');
+        if ($imagenPrincipalFile) {
+            $fotoPrincipalActual = $fotoRepository->findFotoPrincipalByProducto($producto->getId());
+            if ($fotoPrincipalActual) {
+                $fotoRepository->eliminarFoto($fotoPrincipalActual);
+            }
+
+            $nombreArchivo = md5(uniqid()) . '.' . $imagenPrincipalFile->guessExtension();
+            $imagenPrincipalFile->move(
+                $this->getParameter('fotos_directorio'),
+                $nombreArchivo
+            );
+
+            $fotoPrincipal = new Foto();
+            $fotoPrincipal->setNombre($nombreArchivo);
+            $fotoPrincipal->setPrincipal(true);
+            $fotoPrincipal->setProducto($producto);
+
+            $fotoRepository->guardar($fotoPrincipal);
+        }
+
+        $imagenesAdicionalesFiles = $request->files->get('imagenesAdicionales');
+        if ($imagenesAdicionalesFiles) {
+            $fotosAdicionalesActuales = $fotoRepository->findBy(['producto' => $producto, 'principal' => false]);
+            foreach ($fotosAdicionalesActuales as $fotoAdicionalActual) {
+                $fotoRepository->eliminarFoto($fotoAdicionalActual);
+            }
+
+            foreach ($imagenesAdicionalesFiles as $imagenFile) {
+                $nombreArchivo = md5(uniqid()) . '.' . $imagenFile->guessExtension();
+                $imagenFile->move(
+                    $this->getParameter('fotos_directorio'),
+                    $nombreArchivo
+                );
+
+                $fotoAdicional = new Foto();
+                $fotoAdicional->setNombre($nombreArchivo);
+                $fotoAdicional->setPrincipal(false);
+                $fotoAdicional->setProducto($producto);
+
+                $fotoRepository->guardar($fotoAdicional);
+            }
+        }
+
         $productoRepository->actualizar($producto);
 
         return $this->redirectToRoute('productos_index');
@@ -101,9 +193,30 @@ class ProductosController extends AbstractController
     #[Route('/producto/{id}/eliminar', name: 'producto_eliminar', methods: ['POST'])]
     public function delete(Request $request, Producto $producto, ProductoRepository $productoRepository): Response
     {
-        // Utilizar el método del repositorio para eliminar el producto
         $productoRepository->eliminar($producto);
 
         return $this->redirectToRoute('productos_index');
+    }
+
+    #[Route('/foto/{id}/eliminar', name: 'eliminar_foto', methods: ['POST'])]
+    public function eliminarFoto(Request $request, Foto $foto, FotoRepository $fotoRepository): Response
+    {
+        // Verificar si la solicitud es segura (CSRF token)
+        $this->validateCsrfToken($request);
+
+        // Eliminar la foto
+        $fotoRepository->eliminarFoto($foto);
+
+        // Redirigir o devolver una respuesta según necesites
+        return $this->redirectToRoute('productos_index');
+    }
+
+    private function validateCsrfToken(Request $request)
+    {
+        // Comprobar el token CSRF para proteger la acción de eliminar
+        $token = $request->request->get('_token');
+        if (!$this->isCsrfTokenValid('eliminar_foto', $token)) {
+            throw $this->createAccessDeniedException('CSRF token no válido.');
+        }
     }
 }

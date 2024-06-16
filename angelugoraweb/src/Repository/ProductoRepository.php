@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Producto;
 use App\Entity\Categoria;
+use App\Entity\Foto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -57,8 +58,29 @@ class ProductoRepository extends ServiceEntityRepository
     public function eliminar(Producto $producto): void
     {
         $entityManager = $this->getEntityManager();
+
+        $productoId = $producto->getId();
+
+        $fotoRepository = $entityManager->getRepository(Foto::class);
+
+        $fotosDelProducto = $fotoRepository->findBy(['producto' => $productoId]);
+        
+        foreach ($fotosDelProducto as $foto) {
+            $rutaImagen = $foto->getNombre();
+            if ($rutaImagen) {
+                $rutaCompleta = '/imagenes/productos' . $rutaImagen;
+                if (file_exists($rutaCompleta)) {
+                    unlink($rutaCompleta);
+                }
+            }
+
+            $entityManager->remove($foto);
+        }
+
         $entityManager->remove($producto);
+
         $entityManager->flush();
+    
     }
 
     /**

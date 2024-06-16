@@ -100,6 +100,7 @@ footer {
     padding: 10px 0;
     position: relative;
     width: 100%;
+    z-index: 99;
 }
 footer ul {
     list-style: none;
@@ -163,6 +164,7 @@ footer ul li {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(56, 47, 62, 0.2); 
+    margin: 5px;
 }
 
 .customButton:hover {
@@ -194,6 +196,7 @@ footer ul li {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(56, 47, 62, 0.2); 
+    margin: 5px;
 }
 
 .customButton2:hover {
@@ -573,10 +576,11 @@ footer ul li {
 @media screen and (max-width: 1060px) {
     .tienda-sidebar {
         padding-top: 15%;
+        z-index: 1;
     }
     .menu-btn {
-        height: 100%;
-        z-index: 0;
+        height: 300%;
+        z-index: 1;
     }
 }
 
@@ -603,10 +607,10 @@ footer ul li {
 /* PRODUCTO DETALLE */
 
 .product-details {
-    background-color: #f9f9f9; /* Fondo suave */
+    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 20px auto;
     font-family: 'Arial', sans-serif;
@@ -614,7 +618,7 @@ footer ul li {
 
 .product-details h1 {
     text-align: center;
-    color: #382f3e; /* Color de texto secundario */
+    color: #382f3e;
     margin-bottom: 20px;
 }
 
@@ -645,26 +649,26 @@ footer ul li {
 .product-description .price {
     font-size: 24px;
     font-weight: bold;
-    color: #c35cff; /* Color principal de texto */
+    color: #c35cff; 
     margin-bottom: 10px;
 }
 
 .product-description .description {
     font-size: 16px;
-    color: #382f3e; /* Color de texto secundario */
+    color: #382f3e;
     margin-bottom: 10px;
 }
 
 .product-description .category {
     font-size: 14px;
-    color: #a0a0a0; /* Color de texto terciario */
+    color: #a0a0a0;
     margin-bottom: 10px;
 }
 
 .product-description .new {
     font-size: 16px;
     font-weight: bold;
-    color: #ff4081; /* Color de novedad */
+    color: #ff4081;
 }
 
 .product-actions {
@@ -675,7 +679,7 @@ footer ul li {
 .product-actions .btn {
     margin: 0 10px;
     padding: 10px 20px;
-    border-radius: 50px; /* Bordes redondeados */
+    border-radius: 50px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -690,13 +694,11 @@ footer ul li {
 
 /* CATEGORIA DETALLE */
 
-/* Estilos para la vista de categoría */
-
 .category-details {
-    background-color: #f9f9f9; /* Fondo suave */
+    background-color: #f9f9f9;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     margin: 20px auto;
     font-family: 'Arial', sans-serif;
@@ -704,13 +706,13 @@ footer ul li {
 
 .category-details h1 {
     text-align: center;
-    color: #382f3e; /* Color de texto secundario */
+    color: #382f3e; 
     margin-bottom: 20px;
 }
 
 .category-description {
     margin-bottom: 20px;
-    color: #555; /* Color de texto terciario */
+    color: #555; 
 }
 
 .category-products {
@@ -719,7 +721,7 @@ footer ul li {
 
 .category-products h2 {
     font-size: 20px;
-    color: #382f3e; /* Color de texto secundario */
+    color: #382f3e;
     margin-bottom: 10px;
 }
 
@@ -730,16 +732,16 @@ footer ul li {
 }
 
 .product-item {
-    border: 1px solid #ddd; /* Borde ligero */
+    border: 1px solid #ddd;
     padding: 15px;
     border-radius: 8px;
     background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
 }
 
 .product-item:hover {
-    transform: translateY(-5px); /* Efecto de elevación */
+    transform: translateY(-5px);
 }
 
 .product-item img {
@@ -749,15 +751,116 @@ footer ul li {
 
 .product-item h3 {
     margin-top: 10px;
-    color: #382f3e; /* Color de texto secundario */
+    color: #382f3e; 
 }
 
 .product-item .price {
     font-weight: bold;
-    color: #1db954; /* Color de precio */
+    color: #1db954;
     margin-bottom: 10px;
 }
 
 .product-item p {
-    color: #555; /* Color de texto terciario */
+    color: #555;
+}
+
+.card{
+    z-index: 0 !important;
+}
+
+.productImagen {
+    margin-right: 5%;
+}
+
+/* FORM PRODUCTO */
+.cardFormProductos {
+    border-radius: 15px;
+    overflow: hidden;
+}
+.cardFormProductos-header {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+}
+.btnFormProductos {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    border: none;
+}
+.btnFormProductos:hover {
+    background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+}
+
+/* Detalle producto */
+
+.product-details {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+.product-info {
+    display: flex;
+    align-items: flex-start;
+}
+.productImagen {
+    flex: 1;
+    text-align: center;
+    margin-right: 20px;
+}
+.productImagen img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.product-description {
+    flex: 1;
+}
+.price {
+    font-size: 1.5em;
+    color: #009688;
+    font-weight: bold;
+}
+.description {
+    margin-top: 10px;
+}
+.category {
+    margin-top: 10px;
+}
+.new {
+    font-weight: bold;
+    color: #f44336;
+}
+.additional-images {
+    margin-top: 20px;
+}
+.additional-images h3 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    color: #333;
+}
+.additional-images-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.additional-images-container .imagen-container {
+    flex: 0 0 24%;
+    margin-right: 1%;
+    margin-bottom: 10px;
+}
+.additional-images-container .imagen-container img {
+    width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.product-actions {
+    margin-top: 20px;
+    text-align: center;
 }

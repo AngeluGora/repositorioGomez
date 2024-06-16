@@ -8,17 +8,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProductoRepository;
 use App\Repository\CategoriaRepository;
+use App\Repository\FotoRepository;
 
 class TiendaController extends AbstractController
 {
     /**
      * @Route("/todos-los-productos", name="ver_todos_los_productos")
      */
-    public function verTodosLosProductos(ProductoRepository $productoRepository): Response
+    public function verTodosLosProductos(ProductoRepository $productoRepository, FotoRepository $fotoRepository): Response
     {
         $productos = $productoRepository->findAll();
+        $fotos = $fotoRepository->findAll();
         return $this->render('tienda/gridTodosProductos.html.twig', [
             'productos' => $productos,
+            'fotos' => $fotos,
         ]);
     }
 

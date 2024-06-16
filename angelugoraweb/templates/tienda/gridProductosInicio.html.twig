@@ -3,16 +3,21 @@
 		<div class="row">
 			{% for producto in productos|slice(0, 4) %}
 				<div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-					<div
-						class="card">
-						{# <img src="{{ asset('uploads/productos/' ~ producto.imagen) }}" class="card-img-top" alt="{{ producto.nombre }}"> #}
-						<div class="card-body">
-							<a href="{{ path('producto_ver', {'id': producto.id}) }}">
+					<div class="card">
+						<a href="{{ path('producto_ver', {'id': producto.id}) }}">
+							{% for foto in fotos %}
+								{% if foto.getProducto().getId() == producto.getId() and foto.isPrincipal() %}
+									<div class="imagen-container">
+										<img src="{{ asset('imagenes/productos/' ~ foto.getNombre()) }}" class="card-img-top" alt="{{ producto.getNombre }}">
+									</div>
+								{% endif %}
+							{% endfor %}
+							<div class="card-body">
 								<h5 class="card-title" id="titulosSecundarios">{{ producto.nombre }}</h5>
 								<p class="card-text" id="textosGenerales">{{ producto.descripcion }}</p>
 								<p class="card-text" id="textosGenerales">{{ producto.precio }}€</p>
-							</a>
-						</div>
+							</div>
+						</a>
 					</div>
 				</div>
 			{% endfor %}
@@ -20,14 +25,6 @@
 		<a href="{{ path('ver_todos_los_productos') }}">
 			<button class="customButton">Ver todos los productos</button>
 		</a>
-		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
-			<a href="{{ path('productos_index') }}">
-				<button class="customButton2">Administrar Productos</button>
-			</a>
-			<a href="{{ path('producto_nuevo') }}">
-				<button class="customButton2">Crear Nuevo Producto</button>
-			</a>
-		{% endif %}
 	{% else %}
 		<div class="container-fluid">
 			<div class="row justify-content-center align-items-center">
@@ -38,5 +35,13 @@
 				</div>
 			</div>
 		</div>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
+		<a href="{{ path('productos_index') }}">
+			<button class="customButton2">Administrar Productos</button>
+		</a>
+		<a href="{{ path('producto_nuevo') }}">
+			<button class="customButton2">Crear Nuevo Producto</button>
+		</a>
 	{% endif %}
 </div>

@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\FotoRepository;
 
 class CategoriasController extends AbstractController
 {
@@ -44,12 +45,14 @@ class CategoriasController extends AbstractController
     }
 
     #[Route('/categoria/{id}', name: 'categoria_ver')]
-    public function show(Categoria $categoria, ProductoRepository $productoRepository): Response
+    public function show(Categoria $categoria, ProductoRepository $productoRepository, FotoRepository $fotoRepository): Response
     {
         $productos = $productoRepository->findByCategoria($categoria);
+        $fotos = $fotoRepository->findAll();
         return $this->render('categorias/ver.html.twig', [
             'categoria' => $categoria,
             'productos' => $productos,
+            'fotos' => $fotos,
         ]);
     }
 

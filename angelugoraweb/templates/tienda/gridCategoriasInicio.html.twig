@@ -19,14 +19,7 @@
 		<a href="{{ path('ver_todas_las_categorias') }}">
 			<button class="customButton">Ver todas las categorías</button>
 		</a>
-		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
-			<a href="{{ path('categorias_index') }}">
-				<button class="customButton2">Administrar Categorias</button>
-			</a>
-			<a href="{{ path('categoria_nuevo') }}">
-				<button class="customButton2">Crear Nueva Categoría</button>
-			</a>
-		{% endif %}
+
 	{% else %}
 		<div class="container-fluid">
 			<div class="row justify-content-center align-items-center">
@@ -37,5 +30,13 @@
 				</div>
 			</div>
 		</div>
+	{% endif %}
+	{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_WEBMASTER') %}
+		<a href="{{ path('categorias_index') }}">
+			<button class="customButton2">Administrar Categorias</button>
+		</a>
+		<a href="{{ path('categoria_nuevo') }}">
+			<button class="customButton2">Crear Nueva Categoría</button>
+		</a>
 	{% endif %}
 </div>

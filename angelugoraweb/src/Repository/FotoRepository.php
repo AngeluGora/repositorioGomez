@@ -2,42 +2,42 @@
 
 namespace App\Repository;
 
+
 use App\Entity\Foto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
-/**
- * @extends ServiceEntityRepository<Foto>
- */
 class FotoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private string $fotosDirectorio;
+
+    public function __construct(ManagerRegistry $registry, string $fotosDirectorio)
     {
         parent::__construct($registry, Foto::class);
+        $this->fotosDirectorio = $fotosDirectorio;
     }
 
-    //    /**
-    //     * @return Foto[] Returns an array of Foto objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('f.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
 
-    //    public function findOneBySomeField($value): ?Foto
-    //    {
-    //        return $this->createQueryBuilder('f')
-    //            ->andWhere('f.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function guardar(Foto $foto): void
+    {
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($foto);
+        $entityManager->flush();
+    }
+
+    /**
+     * Encuentra la foto principal asociada a un producto.
+     *
+     * @param int $productoId El ID del producto
+     * @return Foto|null La foto principal encontrada o null si no existe
+     */
+    public function findFotoPrincipalByProducto(int $productoId): ?Foto
+    {
+        return $this->createQueryBuilder('f')
+            ->andWhere('f.producto = :productoId')
+            ->andWhere('f.principal = true')
+            ->setParameter('productoId', $productoId)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProductoRepository;
 use App\Repository\CategoriaRepository;
+use App\Repository\FotoRepository;
 
 class GeneralController extends AbstractController
 {
@@ -65,18 +66,21 @@ class GeneralController extends AbstractController
      */
     public function tienda(Request $request,
         ProductoRepository $productoRepository,
-        CategoriaRepository $categoriaRepository
+        CategoriaRepository $categoriaRepository,
+        FotoRepository $fotoRepository
     ): Response {
         $request->setLocale('es');
         
         $productos = $productoRepository->findAll();
         $categorias = $categoriaRepository->findAll();
         $novedades = $productoRepository->findBy(['novedad' => true]);
+        $fotos = $fotoRepository->findAll();
 
         return $this->render('tienda/index.html.twig', [
             'productos' => $productos,
             'categorias' => $categorias,
             'novedades' => $novedades,
+            'fotos' => $fotos,
         ]);
     }
 
