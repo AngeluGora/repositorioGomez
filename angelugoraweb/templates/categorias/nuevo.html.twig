@@ -2,22 +2,26 @@
 
 {% extends 'base.html.twig' %}
 
-{% block title %}Nueva Categoría{% endblock %}
+{% block title %}Nueva Categoría
+{% endblock %}
 
 {% block main %}
-    <h1>Nueva Categoría</h1>
+	<h1 class="formCrearCategoria-title">Nueva Categoría</h1>
 
-    <form action="{{ path('categoria_crear') }}" method="post">
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-        </div>
-        <div>
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-        </div>
-        <button type="submit">Crear Categoría</button>
-    </form>
+	<form action="{{ path('categoria_crear') }}" method="post" class="formCrearCategoria">
+		<div class="formCrearCategoria-group">
+			<label for="nombre" class="formCrearCategoria-label">Nombre:</label>
+			<input type="text" id="nombre" name="nombre" class="formCrearCategoria-input" required>
+		</div>
+		<div class="formCrearCategoria-group">
+			<label for="descripcion" class="formCrearCategoria-label">Descripción:</label>
+			<textarea id="descripcion" name="descripcion" class="formCrearCategoria-textarea" rows="4" required></textarea>
+		</div>
+		<button type="submit" class="customButton2">Crear Categoría</button>
+	</form>
 
-    <a href="{{ path('categorias_index') }}">Volver a la lista</a>
+	<a href="{{ path('categorias_index') }}" class="formCrearCategoria-backLink">
+		<button class="customButton2">Volver a la lista</button>
+	</a>
+
 {% endblock %}

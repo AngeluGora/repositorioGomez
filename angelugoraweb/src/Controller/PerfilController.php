@@ -26,6 +26,9 @@ class PerfilController extends AbstractController
     public function index(PedidoRepository $pedidoRepository): Response
     {
         $userId = $this->getUser()->getId();
+        if (!$this->getUser()) {
+            return $this->redirectToRoute('app_login');
+        }
         $pedidos = $pedidoRepository->findPedidosByUserId($userId);
 
         return $this->render('perfil/index.html.twig', [

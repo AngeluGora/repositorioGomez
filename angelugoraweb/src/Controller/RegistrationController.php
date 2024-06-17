@@ -49,11 +49,8 @@ class RegistrationController extends AbstractController
         $provincia = $request->request->get('provincia');
         $codigoPostal = $request->request->get('codigo_postal');
         $agreeTerms = $request->request->get('agree_terms');
-        
         $error = null;
-
         $existingUser = $this->userRepository->findOneByEmail($email);
-        
         if (
             $nombre === null || $apellidos === null || $telefono === null || $email === null || $password === null ||
             $confirmPassword === null || $direccion === null || $poblacion === null || $provincia === null ||
@@ -79,14 +76,11 @@ class RegistrationController extends AbstractController
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $error = 'El email no tiene un formato válido';
         }
-
         if ($error) {
             return $this->render('registration/register.html.twig', [
                 'error' => $error,
             ]);
         }
-
-        // Si no hay errores, proceder con la creación del usuario
         $user = new User();
         $user->setEmail($email);
         $user->setPassword(
@@ -107,7 +101,7 @@ class RegistrationController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return $this->redirectToRoute('app_tienda');
+        return $this->redirectToRoute('app_login');
     }
 }
 

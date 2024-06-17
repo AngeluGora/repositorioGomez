@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block main %}
+	{% for label, messages in app.flashes %}
+		{% for message in messages %}
+
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+	{% endfor %}
 	<div class="product-details">
 		<h1>{{ producto.nombre }}</h1>
 		<div class="product-info">

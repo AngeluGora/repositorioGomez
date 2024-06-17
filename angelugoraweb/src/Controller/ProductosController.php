@@ -138,53 +138,7 @@ class ProductosController extends AbstractController
         if (!$categoria) {
             throw $this->createNotFoundException('La categoría seleccionada no existe.');
         }
-
         $producto->setCategoria($categoria);
-
-        $imagenPrincipalFile = $request->files->get('imagenPrincipal');
-        if ($imagenPrincipalFile) {
-            $fotoPrincipalActual = $fotoRepository->findFotoPrincipalByProducto($producto->getId());
-            if ($fotoPrincipalActual) {
-                $fotoRepository->eliminarFoto($fotoPrincipalActual);
-            }
-
-            $nombreArchivo = md5(uniqid()) . '.' . $imagenPrincipalFile->guessExtension();
-            $imagenPrincipalFile->move(
-                $this->getParameter('fotos_directorio'),
-                $nombreArchivo
-            );
-
-            $fotoPrincipal = new Foto();
-            $fotoPrincipal->setNombre($nombreArchivo);
-            $fotoPrincipal->setPrincipal(true);
-            $fotoPrincipal->setProducto($producto);
-
-            $fotoRepository->guardar($fotoPrincipal);
-        }
-
-        $imagenesAdicionalesFiles = $request->files->get('imagenesAdicionales');
-        if ($imagenesAdicionalesFiles) {
-            $fotosAdicionalesActuales = $fotoRepository->findBy(['producto' => $producto, 'principal' => false]);
-            foreach ($fotosAdicionalesActuales as $fotoAdicionalActual) {
-                $fotoRepository->eliminarFoto($fotoAdicionalActual);
-            }
-
-            foreach ($imagenesAdicionalesFiles as $imagenFile) {
-                $nombreArchivo = md5(uniqid()) . '.' . $imagenFile->guessExtension();
-                $imagenFile->move(
-                    $this->getParameter('fotos_directorio'),
-                    $nombreArchivo
-                );
-
-                $fotoAdicional = new Foto();
-                $fotoAdicional->setNombre($nombreArchivo);
-                $fotoAdicional->setPrincipal(false);
-                $fotoAdicional->setProducto($producto);
-
-                $fotoRepository->guardar($fotoAdicional);
-            }
-        }
-
         $productoRepository->actualizar($producto);
 
         return $this->redirectToRoute('productos_index');
@@ -201,19 +155,15 @@ class ProductosController extends AbstractController
     #[Route('/foto/{id}/eliminar', name: 'eliminar_foto', methods: ['POST'])]
     public function eliminarFoto(Request $request, Foto $foto, FotoRepository $fotoRepository): Response
     {
-        // Verificar si la solicitud es segura (CSRF token)
         $this->validateCsrfToken($request);
 
-        // Eliminar la foto
         $fotoRepository->eliminarFoto($foto);
 
-        // Redirigir o devolver una respuesta según necesites
         return $this->redirectToRoute('productos_index');
     }
 
     private function validateCsrfToken(Request $request)
     {
-        // Comprobar el token CSRF para proteger la acción de eliminar
         $token = $request->request->get('_token');
         if (!$this->isCsrfTokenValid('eliminar_foto', $token)) {
             throw $this->createAccessDeniedException('CSRF token no válido.');

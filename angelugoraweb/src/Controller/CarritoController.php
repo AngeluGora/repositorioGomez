@@ -34,7 +34,10 @@ class CarritoController extends AbstractController
 
         $cantidad = (int) $request->request->get('cantidad', 1);
         $usuarioId = $request->request->get('usuario_id');
-
+        if (!$usuarioId) {
+            $this->addFlash('alert', 'Tienes que iniciar sesión para añadir productos al carrito');
+            return $this->redirectToRoute('producto_ver', ['id' => $id]);
+        }
         $usuario = $usuarioRepository->find($usuarioId);
         if (!$usuario) {
             $this->addFlash('error', 'Usuario no encontrado.');

@@ -7,6 +7,7 @@ use App\Entity\Categoria;
 use App\Entity\Foto;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\LineaPedidoRepository;
 
 /**
  * @method Producto|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,11 +17,14 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProductoRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $lineaPedidoRepository;
+
+    public function __construct(ManagerRegistry $registry, LineaPedidoRepository $lineaPedidoRepository)
     {
         parent::__construct($registry, Producto::class);
+        $this->lineaPedidoRepository = $lineaPedidoRepository;
     }
-
+    
     /**
      * Guarda un producto en la base de datos.
      *
@@ -59,28 +63,31 @@ class ProductoRepository extends ServiceEntityRepository
     {
         $entityManager = $this->getEntityManager();
 
-        $productoId = $producto->getId();
-
+        // Eliminar fotos asociadas al producto
         $fotoRepository = $entityManager->getRepository(Foto::class);
+        $fotosDelProducto = $fotoRepository->findBy(['producto' => $producto]);
 
-        $fotosDelProducto = $fotoRepository->findBy(['producto' => $productoId]);
-        
         foreach ($fotosDelProducto as $foto) {
             $rutaImagen = $foto->getNombre();
             if ($rutaImagen) {
-                $rutaCompleta = '/imagenes/productos' . $rutaImagen;
+                $rutaCompleta = '/imagenes/productos/' . $rutaImagen; // Ajusta la ruta según tu estructura de archivos
                 if (file_exists($rutaCompleta)) {
-                    unlink($rutaCompleta);
+                    unlink($rutaCompleta); // Eliminar archivo físico si existe
                 }
             }
 
             $entityManager->remove($foto);
         }
 
+        // Eliminar líneas de pedido asociadas al producto usando LineaPedidoRepository
+        $lineasPedido = $this->lineaPedidoRepository->findByProducto($producto);
+
+        foreach ($lineasPedido as $lineaPedido) {
+            $entityManager->remove($lineaPedido);
+        }
         $entityManager->remove($producto);
 
         $entityManager->flush();
-    
     }
 
     /**

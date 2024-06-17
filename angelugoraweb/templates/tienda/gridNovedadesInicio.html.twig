@@ -3,17 +3,23 @@
         <div class="row">
             {% for producto in novedades|slice(0, 4) %}
                 <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-                    <div class="card">
-                        {# <img src="{{ asset('uploads/productos/' ~ producto.imagen) }}" class="card-img-top" alt="{{ producto.nombre }}"> #}
-                        <div class="card-body">
-                            <a href="{{ path('producto_ver', {'id': producto.id}) }}">
-                                <h5 class="card-title" id="titulosSecundarios">{{ producto.nombre }}</h5>
-                                <p class="card-text" id="textosGenerales">{{ producto.descripcion }}</p>
-                                <p class="card-text" id="textosGenerales">{{ producto.precio }}€</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+					<div class="card">
+						<a href="{{ path('producto_ver', {'id': producto.id}) }}">
+							{% for foto in fotos %}
+								{% if foto.getProducto().getId() == producto.getId() and foto.isPrincipal() %}
+									<div class="imagen-container">
+										<img src="{{ asset('imagenes/productos/' ~ foto.getNombre()) }}" class="card-img-top" alt="{{ producto.getNombre }}">
+									</div>
+								{% endif %}
+							{% endfor %}
+							<div class="card-body">
+								<h5 class="card-title" id="titulosSecundarios">{{ producto.nombre }}</h5>
+								<p class="card-text" id="textosGenerales">{{ producto.descripcion }}</p>
+								<p class="card-text" id="textosGenerales">{{ producto.precio }}€</p>
+							</div>
+						</a>
+					</div>
+				</div>
             {% endfor %}
         </div>
         <a href="{{ path('ver_todas_novedades') }}"><button class="customButton">Ver todas las novedades</button></a>

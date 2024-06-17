@@ -911,3 +911,83 @@ li {
     background-color: #FFA500;
     border-color: #FFA500;
 }
+
+.formCrearCategoria, .formCrearCategoria-title {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.formCrearCategoria-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.formCrearCategoria-group {
+    margin-bottom: 15px;
+}
+
+.formCrearCategoria-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.formCrearCategoria-input, .formCrearCategoria-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+.formCrearCategoria-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Arial', sans-serif;
+}
+
+.formCrearCategoria-button:hover {
+    background-color: #0056b3;
+}
+
+.formCrearCategoria-backLink {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .formCrearCategoria, .formCrearCategoria-title {
+        padding: 15px;
+        max-width: 100%;
+    }
+}
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.alert-alert {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}

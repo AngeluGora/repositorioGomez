@@ -39,11 +39,13 @@ class TiendaController extends AbstractController
     /**
      * @Route("/todas-las-novedades", name="ver_todas_las_novedades")
      */
-    public function verTodasLasNovedades(ProductoRepository $productoRepository): Response
+    public function verTodasLasNovedades(ProductoRepository $productoRepository, FotoRepository $fotoRepository): Response
     {
+        $fotos = $fotoRepository->findAll();
         $novedades = $productoRepository->buscarNovedades();
         return $this->render('tienda/gridTodasNovedades.html.twig', [
             'novedades' => $novedades,
+            'fotos' => $fotos,
         ]);
     }
 }
