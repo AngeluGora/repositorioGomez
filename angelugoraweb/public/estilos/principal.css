@@ -216,6 +216,29 @@ footer ul li {
     cursor: not-allowed;
     box-shadow: none;
 }
+
+.section-title {
+    font-size: 1.5em;
+    color: #333;
+    border-bottom: #77aaff 2px solid;
+    padding-bottom: 10px;
+}
+p, ul {
+    margin: 0 0 10px;
+}
+ul {
+    padding-left: 20px;
+}
+li {
+    margin-bottom: 5px;
+}
+.section-presentacion {
+    margin-bottom: 20px;
+}
+.section-curriculum {
+    margin-bottom: 20px;
+}
+
     /* INICIO */
 
 #carouselInicio {

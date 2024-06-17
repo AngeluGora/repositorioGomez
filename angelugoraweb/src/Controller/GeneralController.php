@@ -92,4 +92,14 @@ class GeneralController extends AbstractController
         $request->setLocale('es');
         return $this->render('contacto/index.html.twig');
     }
+
+    /**
+     * @Route("/sobreMi", name="app_sobreMi")
+     */
+    public function sobreMi(Request $request): Response
+    {
+        $request->setLocale('es');
+        return $this->render('general/sobreMi.html.twig');
+    }
+
 }

@@ -24,6 +24,10 @@ app_servicios:
     path: /servicios
     controller: App\Controller\GeneralController::servicios
 
+app_sobreMi:
+    path: /sobreMi
+    controller: App\Controller\GeneralController::sobreMi
+
 app_tienda:
     path: /tienda
     controller: App\Controller\GeneralController::tienda
