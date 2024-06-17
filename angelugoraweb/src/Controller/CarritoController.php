@@ -13,6 +13,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CarritoController extends AbstractController
 {
@@ -99,5 +101,32 @@ class CarritoController extends AbstractController
         return $total;
     }
 
-    
+    /**
+     * @Route("/eliminar-linea-pedido/{id}", name="eliminar_linea_pedido", methods={"GET"})
+     */
+    public function eliminarLineaPedido($id, LineaPedidoRepository $lineaPedidoRepository, PedidoRepository $pedidoRepository, EntityManagerInterface $entityManager): JsonResponse
+    {
+        try {
+            // Encontrar la línea de pedido por su ID
+            $lineaPedido = $lineaPedidoRepository->find($id);
+
+            // Verificar si la línea de pedido existe
+            if (!$lineaPedido) {
+                return new JsonResponse(['mensaje' => 'Línea de pedido no encontrada'], 404);
+            }
+
+            // Obtener el pedido asociado a la línea de pedido
+            $pedido = $lineaPedido->getPedido();
+
+            // Remover la línea de pedido del pedido
+            $pedido->removeLineaPedido($lineaPedido);
+            
+            // Persistir los cambios
+            $entityManager->flush();
+
+            return new JsonResponse(['mensaje' => 'Línea de pedido eliminada']);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Error al procesar la solicitud: ' . $e->getMessage()], 500);
+        }
+    }
 }

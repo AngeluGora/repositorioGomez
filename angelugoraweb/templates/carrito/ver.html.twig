@@ -1,64 +1,116 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Carrito{% endblock %}
+{% block title %}Carrito
+{% endblock %}
 
 {% block main %}
-    <div class="container mt-5">
-        <h1 class="mb-4 text-center">Tu Carrito</h1>
+	<div class="container mt-5">
+		<h1 class="mb-4 text-center">Tu Carrito</h1>
+		{% if pedido %}
+			<div class="row">
+				<div class="col-lg-8">
+					<div class="table-responsive">
+						<table class="table table-hover">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Producto</th>
+									<th scope="col">Cantidad</th>
+									<th scope="col">Precio Unitario</th>
+									<th scope="col">Total</th>
+									<th scope="col">Acciones</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for lineaPedido in lineasPedido %}
+									<tr>
+										<td class="product-name">{{ lineaPedido.producto.nombre }}</td>
+										<td>{{ lineaPedido.cantidad }}</td>
+										<td class="product-price">${{ lineaPedido.producto.precio }}</td>
+										<td>${{ lineaPedido.cantidad * lineaPedido.producto.precio }}</td>
+										<td>
+											<button class="btn btn-danger btn-eliminar-linea" data-linea-id="{{ lineaPedido.id }}">Eliminar</button>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="card bg-light p-3">
+						<h5 class="card-title">Resumen del Carrito</h5>
+						<p class="card-text" id="textosGenerales2">
+							Subtotal:
+							<span class="float-right" id="textosGenerales">${{ totalCarrito }}</span>
+						</p>
+						<p class="card-text shipping-cost" id="textosGenerales2">
+							+ Gastos de Envío:
+							<span class="float-right" id="textosGenerales">€3.99</span>
+						</p>
+						<hr>
+						<p class="card-text total-price" id="textosGenerales2">
+							Total:
+							<span class="float-right" id="textosGenerales">${{ totalCarrito + 3.99 }}</span>
+						</p>
+						<form method="post" action="{{ path('ir_a_pagar') }}">
+							<input type="hidden" name="userId" value="{{ app.user.id }}">
+							<input type="hidden" name="pedidoId" value="{{ pedido.id }}">
+							<input type="hidden" name="precioFinal" value="{{ totalCarrito + 3.99 }}">
+							<button type="submit" class="btn btn-lg btn-checkout btn-block">Ir a Pagar</button>
+						</form>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<button type="button" class="customButton btn-recargar-pagina mt-5">Recargar Carrito</button>
+				</div>
+			</div>
+		{% else %}
+			<p class="text-center" id="textosGenerales2">Tu carrito está vacío.</p>
+		{% endif %}
+	</div>
+{% endblock %}
 
-        {% if pedido %}
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th scope="col">Producto</th>
-                                    <th scope="col">Cantidad</th>
-                                    <th scope="col">Precio Unitario</th>
-                                    <th scope="col">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for lineaPedido in lineasPedido %}
-                                    <tr>
-                                        <td class="product-name">{{ lineaPedido.producto.nombre }}</td>
-                                        <td>{{ lineaPedido.cantidad }}</td>
-                                        <td class="product-price">${{ lineaPedido.producto.precio }}</td>
-                                        <td>${{ lineaPedido.cantidad * lineaPedido.producto.precio }}</td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card bg-light p-3">
-                        <h5 class="card-title">Resumen del Carrito</h5>
-                        <p class="card-text" id="textosGenerales2">
-                            Subtotal:
-                            <span class="float-right" id="textosGenerales">${{ totalCarrito }}</span>
-                        </p>
-                        <p class="card-text shipping-cost" id="textosGenerales2">
-                            + Gastos de Envío:
-                            <span class="float-right" id="textosGenerales">€3.99</span>
-                        </p>
-                        <hr>
-                        <p class="card-text total-price" id="textosGenerales2">
-                            Total:
-                            <span class="float-right" id="textosGenerales">${{ totalCarrito + 3.99 }}</span>
-                        </p>
-                        <form method="post" action="{{ path('ir_a_pagar') }}">
-                            <input type="hidden" name="userId" value="{{ app.user.id }}">
-                            <input type="hidden" name="pedidoId" value="{{ pedido.id }}">
-                            <input type="hidden" name="precioFinal" value="{{ totalCarrito + 3.99 }}">
-                            <button type="submit" class="btn btn-lg btn-checkout btn-block">Ir a Pagar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        {% else %}
-            <p class="text-center" id="textosGenerales2">Tu carrito está vacío.</p>
-        {% endif %}
-    </div>
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+const btnEliminarLinea = document.querySelectorAll('.btn-eliminar-linea');
+btnEliminarLinea.forEach(btn => {
+btn.addEventListener('click', function (event) {
+event.preventDefault();
+
+const lineaId = btn.getAttribute('data-linea-id');
+console.log('Línea ID:', lineaId); // Depuración
+
+fetch (`/eliminar-linea-pedido/${lineaId}`, {
+method: 'GET',
+headers: {
+'Content-Type': 'application/json'
+}
+}).then(response => {
+if (!response.ok) {
+throw new Error('Error al eliminar línea de pedido');
+}
+// Remueve la fila de la tabla si la eliminación fue exitosa
+const tr = btn.closest('tr');
+if (tr) {
+tr.remove();
+}
+alert('Línea de pedido eliminada correctamente');
+}).catch(error => {
+console.error('Error:', error);
+alert('Error al eliminar la línea de pedido');
+});
+});
+});
+});
+	</script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () { // Event listener para el botón de recargar página
+const btnRecargarPagina = document.querySelector('.btn-recargar-pagina');
+btnRecargarPagina.addEventListener('click', function () {
+location.reload();
+});
+});
+	</script>
 {% endblock %}

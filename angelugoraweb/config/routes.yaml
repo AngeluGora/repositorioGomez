@@ -159,3 +159,7 @@ procesar_pago:
 ir_a_pagar:
     path: /carrito/ir-a-pagar
     controller: App\Controller\PagoController::irAPagar
+
+eliminar_linea_pedido:
+    path: /eliminar-linea-pedido/{id}
+    controller: App\Controller\CarritoController::eliminarLineaPedido
